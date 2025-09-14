@@ -1,6 +1,5 @@
 <?php
 require_once 'config/database.php';
-session_start();
 
 $university_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -60,36 +59,10 @@ if ($selected_major_id) {
     $scores_stmt->execute([':major_id' => $selected_major_id]);
     $scores = $scores_stmt->fetchAll();
 }
+
+$page_title = escape($university['name']) . ' - Thông tin tuyển sinh';
+include 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo escape($university['name']); ?> - Thông tin tuyển sinh</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <h1><?php echo escape($university['name']); ?></h1>
-            <p><?php echo escape($university['code']); ?> - <?php echo escape($university['province']); ?></p>
-        </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="container">
-            <ul>
-                <li><a href="index.php">← Trang chủ</a></li>
-                <li><a href="search.php">Tìm kiếm nâng cao</a></li>
-                <li><a href="admin/">Quản trị</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container">
         <!-- University Info -->
         <div class="university-card" style="margin-bottom: 2rem;">
             <div class="university-header">
@@ -243,14 +216,6 @@ if ($selected_major_id) {
                 <strong>Chưa có dữ liệu điểm chuẩn cho ngành này!</strong>
             </div>
         <?php endif; ?>
-    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Hệ thống quản lý trường đại học. Tất cả quyền được bảo lưu.</p>
-        </div>
-    </footer>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>
 

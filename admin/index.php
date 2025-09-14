@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../config/database.php';
 
 // Kiểm tra đăng nhập
@@ -50,15 +49,9 @@ $highest_scores = $pdo->query("
     ORDER BY a.min_score DESC
     LIMIT 10
 ")->fetchAll();
-?>
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Hệ thống quản lý trường đại học</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+$page_title = 'Admin Panel - Hệ thống quản lý trường đại học';
+$additional_css = '
     <style>
         .admin-header {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
@@ -139,8 +132,9 @@ $highest_scores = $pdo->query("
             background: #c0392b;
         }
     </style>
-</head>
-<body>
+';
+include '../includes/header.php';
+?>
     <!-- Admin Header -->
     <header class="admin-header">
         <div class="container">
@@ -170,25 +164,25 @@ $highest_scores = $pdo->query("
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-number"><?php echo formatNumber($stats['total_universities']); ?></div>
-                <div class="stat-label">Trường đại học</div>
+                <div class="stat-label">Tổng số trường đại học</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number"><?php echo formatNumber($stats['total_majors']); ?></div>
-                <div class="stat-label">Ngành đào tạo</div>
+                <div class="stat-label">Tổng số ngành đào tạo</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number"><?php echo formatNumber($stats['total_scores']); ?></div>
-                <div class="stat-label">Điểm chuẩn</div>
+                <div class="stat-label">Tổng số điểm chuẩn</div>
             </div>
         </div>
 
         <!-- University Types Chart -->
         <div class="data-table">
             <div class="table-header">
-                <h2>📊 Phân bố trường theo loại</h2>
+                <h3>Phân bố trường theo loại</h3>
             </div>
             <div class="table-content">
-                <table class="score-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Loại trường</th>
@@ -209,13 +203,13 @@ $highest_scores = $pdo->query("
             </div>
         </div>
 
-        <!-- Top Universities by Majors -->
+        <!-- Top Universities by Major Count -->
         <div class="data-table">
             <div class="table-header">
-                <h2>🏆 Top 10 trường có nhiều ngành nhất</h2>
+                <h3>Top 10 trường có nhiều ngành đào tạo nhất</h3>
             </div>
             <div class="table-content">
-                <table class="score-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -239,10 +233,10 @@ $highest_scores = $pdo->query("
         <!-- Highest Scores -->
         <div class="data-table">
             <div class="table-header">
-                <h2>🎯 Top 10 điểm chuẩn cao nhất năm <?php echo $current_year; ?></h2>
+                <h3>Top 10 điểm chuẩn cao nhất năm <?php echo $current_year; ?></h3>
             </div>
             <div class="table-content">
-                <table class="score-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -258,8 +252,8 @@ $highest_scores = $pdo->query("
                                 <td><?php echo $index + 1; ?></td>
                                 <td><?php echo escape($score['university_name']); ?></td>
                                 <td><?php echo escape($score['major_name']); ?></td>
-                                <td><span class="major-code"><?php echo escape($score['block']); ?></span></td>
-                                <td><span class="score-high"><?php echo formatScore($score['min_score']); ?></span></td>
+                                <td><?php echo escape($score['block']); ?></td>
+                                <td><?php echo formatScore($score['min_score']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -268,11 +262,4 @@ $highest_scores = $pdo->query("
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Hệ thống quản lý trường đại học. Tất cả quyền được bảo lưu.</p>
-        </div>
-    </footer>
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

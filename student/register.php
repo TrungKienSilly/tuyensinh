@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../config/database.php';
 
 $pdo = getDBConnection();
@@ -36,14 +35,9 @@ if ($_POST) {
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký học sinh</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+
+$page_title = 'Đăng ký học sinh';
+$additional_css = '
     <style>
         .auth{max-width:520px;margin:60px auto;background:#fff;padding:2rem;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
         .auth h1{margin:0 0 .75rem;color:#2c3e50}
@@ -59,39 +53,43 @@ if ($_POST) {
         .links a{color:#2c3e50;text-decoration:none}
         .links a:hover{text-decoration:underline}
     </style>
-</head>
-<body>
+';
+include '../includes/header.php';
+?>
     <div class="auth">
         <h1>📝 Đăng ký học sinh</h1>
-        <p>Tạo tài khoản để xem điểm chuẩn chi tiết và tra cứu nhanh</p>
-        <?php if ($error): ?><div class="error"><?php echo escape($error); ?></div><?php endif; ?>
-        <?php if ($success): ?><div class="success"><?php echo escape($success); ?></div><?php endif; ?>
+        <?php if ($error): ?>
+            <div class="error"><?php echo escape($error); ?></div>
+        <?php endif; ?>
+        <?php if ($success): ?>
+            <div class="success"><?php echo escape($success); ?></div>
+        <?php endif; ?>
         <form method="POST">
             <div class="form-group">
-                <label>Họ và tên</label>
-                <input name="full_name" value="<?php echo escape($_POST['full_name'] ?? ''); ?>" placeholder="Nguyễn Văn A">
+                <label for="username">Tên đăng nhập *</label>
+                <input id="username" name="username" value="<?php echo escape($_POST['username'] ?? ''); ?>" required>
             </div>
             <div class="form-group">
-                <label>Email</label>
-                <input name="email" type="email" value="<?php echo escape($_POST['email'] ?? ''); ?>" placeholder="email@domain.com">
+                <label for="password">Mật khẩu *</label>
+                <input id="password" name="password" type="password" required>
             </div>
             <div class="form-group">
-                <label>Tên đăng nhập</label>
-                <input name="username" value="<?php echo escape($_POST['username'] ?? ''); ?>" required>
+                <label for="password_confirm">Nhập lại mật khẩu *</label>
+                <input id="password_confirm" name="password_confirm" type="password" required>
             </div>
             <div class="form-group">
-                <label>Mật khẩu</label>
-                <input name="password" type="password" required>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" value="<?php echo escape($_POST['email'] ?? ''); ?>">
             </div>
             <div class="form-group">
-                <label>Nhập lại mật khẩu</label>
-                <input name="password_confirm" type="password" required>
+                <label for="full_name">Họ và tên</label>
+                <input id="full_name" name="full_name" value="<?php echo escape($_POST['full_name'] ?? ''); ?>">
             </div>
             <button class="btn" type="submit">Đăng ký</button>
         </form>
         <div class="links">
-            <a href="login.php">← Đã có tài khoản? Đăng nhập</a>
+            <a href="login.php">← Đăng nhập</a>
         </div>
     </div>
-</body>
-</html>
+
+<?php include '../includes/footer.php'; ?>

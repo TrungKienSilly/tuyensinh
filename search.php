@@ -103,37 +103,10 @@ $query = "
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $results = $stmt->fetchAll();
+
+$page_title = 'Tìm kiếm nâng cao - Hệ thống quản lý trường đại học';
+include 'includes/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tìm kiếm nâng cao - Hệ thống quản lý trường đại học</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <h1>🔍 Tìm kiếm nâng cao</h1>
-            <p>Tìm kiếm trường đại học và ngành học theo nhiều tiêu chí</p>
-        </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="container">
-            <ul>
-                <li><a href="index.php">Trang chủ</a></li>
-                <li><a href="search.php">Tìm kiếm nâng cao</a></li>
-                <li><a href="admin/">Quản trị</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container">
         <!-- Search Form -->
         <section class="search-section">
             <form method="GET" class="search-form">
@@ -284,14 +257,6 @@ $results = $stmt->fetchAll();
                 </div>
             <?php endif; ?>
         <?php endif; ?>
-    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Hệ thống quản lý trường đại học. Tất cả quyền được bảo lưu.</p>
-        </div>
-    </footer>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>
 

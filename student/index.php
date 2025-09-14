@@ -1,19 +1,13 @@
 <?php
-session_start();
 require_once '../config/database.php';
 
 if (!isset($_SESSION['student_logged_in']) || $_SESSION['student_logged_in'] !== true) {
     header('Location: login.php');
     exit;
 }
-?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khu vực học sinh</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+
+$page_title = 'Khu vực học sinh';
+$additional_css = '
     <style>
         .hero{max-width:900px;margin:60px auto;background:#fff;padding:2rem;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,.1)}
         .actions{margin-top:1.5rem;display:flex;gap:1rem}
@@ -21,8 +15,9 @@ if (!isset($_SESSION['student_logged_in']) || $_SESSION['student_logged_in'] !==
         .btn-primary{background:#2c3e50;color:#fff}
         .btn-secondary{background:#6c757d;color:#fff}
     </style>
-</head>
-<body>
+';
+include '../includes/header.php';
+?>
     <div class="hero">
         <h1>Chào, <?php echo escape($_SESSION['student_username'] ?? 'Học sinh'); ?>!</h1>
         <p>Bạn đã đăng nhập thành công. Bạn có thể tra cứu trường/ngành và xem điểm chuẩn mới nhất.</p>
@@ -31,5 +26,5 @@ if (!isset($_SESSION['student_logged_in']) || $_SESSION['student_logged_in'] !==
             <a class="btn btn-secondary" href="logout.php">Đăng xuất</a>
         </div>
     </div>
-</body>
-</html>
+
+<?php include '../includes/footer.php'; ?>

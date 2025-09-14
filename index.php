@@ -1,6 +1,5 @@
 <?php
 require_once 'config/database.php';
-session_start();
 
 // Xử lý tìm kiếm
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -64,42 +63,10 @@ $query = "
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $universities = $stmt->fetchAll();
+
+$page_title = 'Hệ thống quản lý trường đại học tuyển sinh';
+include 'includes/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ thống quản lý trường đại học tuyển sinh</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <h1>🎓 Hệ thống quản lý trường đại học</h1>
-            <p>Tra cứu thông tin tuyển sinh các trường đại học trên toàn quốc</p>
-        </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="container">
-            <ul>
-                <li><a href="index.php">Trang chủ</a></li>
-                <li><a href="search.php">Tìm kiếm nâng cao</a></li>
-                <li><a href="admin/">Quản trị</a></li>
-                <?php if (!empty($_SESSION['student_logged_in'])): ?>
-                    <li><a href="student/logout.php">Đăng xuất</a></li>
-                <?php else: ?>
-                    <li><a href="student/login.php">Đăng nhập</a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container">
         <!-- Search Section -->
         <section class="search-section">
             <form method="GET" class="search-form">
@@ -216,13 +183,5 @@ $universities = $stmt->fetchAll();
                 </div>
             <?php endif; ?>
         <?php endif; ?>
-    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Hệ thống quản lý trường đại học. Tất cả quyền được bảo lưu.</p>
-        </div>
-    </footer>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

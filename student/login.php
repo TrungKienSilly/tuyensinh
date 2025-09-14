@@ -4,13 +4,13 @@ require_once '../config/database.php';
 
 // Nếu đã đăng nhập -> về trang học sinh hoặc trang redirect
 if (isset($_SESSION['student_logged_in']) && $_SESSION['student_logged_in'] === true) {
-    $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : (isset($_POST['redirect']) ? $_POST['redirect'] : 'index.php');
-    header('Location: ' . ($redirect ?: 'index.php'));
+    $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : (isset($_POST['redirect']) ? $_POST['redirect'] : '../index.php');
+    header('Location: ' . ($redirect ?: '../index.php'));
     exit;
 }
 
 $error = '';
-$redirectAfter = isset($_GET['redirect']) ? $_GET['redirect'] : ($_POST['redirect'] ?? 'index.php');
+$redirectAfter = isset($_GET['redirect']) ? $_GET['redirect'] : ($_POST['redirect'] ?? '../index.php');
 
 if ($_POST) {
     $username = trim($_POST['username'] ?? '');
@@ -27,8 +27,8 @@ if ($_POST) {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['student_logged_in'] = true;
             $_SESSION['student_username'] = $user['username'];
-            $goto = $_POST['redirect'] ?? 'index.php';
-            header('Location: ' . ($goto ?: 'index.php'));
+            $goto = $_POST['redirect'] ?? '../index.php';
+            header('Location: ' . ($goto ?: '../index.php'));
             exit;
         } else {
             $error = 'Tên đăng nhập hoặc mật khẩu không đúng!';
@@ -36,13 +36,6 @@ if ($_POST) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập học sinh</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
     <style>
         .login-container{max-width:420px;margin:80px auto;background:#fff;padding:2rem;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
         .login-header{text-align:center;margin-bottom:1rem}
@@ -58,8 +51,6 @@ if ($_POST) {
         .links a{color:#2c3e50;text-decoration:none;margin:0 .5rem}
         .links a:hover{text-decoration:underline}
     </style>
-</head>
-<body>
     <div class="login-container">
         <div class="login-header">
             <h1>🎓 Đăng nhập học sinh</h1>
@@ -85,5 +76,3 @@ if ($_POST) {
             <a href="register.php">Đăng ký tài khoản</a>
         </div>
     </div>
-</body>
-</html>
